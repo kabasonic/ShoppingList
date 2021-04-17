@@ -1,6 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="RtlHardcoded">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_shopping_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar_sopping_list"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            app:contentScrim="?colorPrimary"
+            app:expandedTitleMarginBottom="94dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="Shopping List">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/gradient" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_shopping_details"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@null"
+                app:layout_collapseMode="pin"
+                />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:behavior_overlapTop="78dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_gravity="bottom"
+                    android:id="@+id/flexible.example.cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="4dp"
+                    app:contentPaddingBottom="8dp"
+                    app:contentPaddingLeft="8dp"
+                    app:contentPaddingRight="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/linear1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/bt_edit_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:icon="@drawable/ic_outline_edit_24"
+                                app:iconGravity="top"
+                                app:iconTint="@color/black"
+                                android:text="Edit title"
+                                android:textColor="@color/black"
+                                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/bt_archiving"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:icon="@drawable/ic_outline_archive_24"
+                                app:iconGravity="top"
+                                app:iconTint="@color/black"
+                                android:text="Archiving"
+                                android:textColor="@color/black"
+                                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/bt_share"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:icon="@drawable/ic_outline_share_24"
+                                app:iconGravity="top"
+                                app:iconTint="@color/black"
+                                android:text="Share"
+                                android:textColor="@color/black"
+                                style="@style/Widget.AppCompat.Button.Borderless"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_below="@id/linear1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:listitem="@layout/layout_row_shopping_list"/>
+
+                        <include
+                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            layout="@layout/plug_basket"/>
+
+                    </LinearLayout>
+                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right|end"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_outline_add_24" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

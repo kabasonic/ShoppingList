@@ -1,4 +1,5 @@
 package com.kabasonic.shoppinglist.util;
 
-public class Constans {
+public class Constants {
+    public static final int REQUEST_TITLE = 1;
 }
