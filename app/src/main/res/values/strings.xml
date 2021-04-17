@@ -3,4 +3,141 @@
     <string name="tab_1">Shopping Lists</string>
     <string name="tab_2">Archived Shopping Lists</string>
     <string name="shopping_list">Shopping List</string>
+
+    <string-array name="product_array">
+        <item>Alfalfa Sprouts</item>
+        <item>Apple</item>
+        <item>Apricot</item>
+        <item>Artichoke</item>
+        <item>Asian Pear</item>
+        <item>Asparagus</item>
+        <item>Atemoya</item>
+        <item>Avocado</item>
+        <item>Bamboo Shoots</item>
+        <item>Banana</item>
+        <item>Bean Sprouts</item>
+        <item>Beans</item>
+        <item>Beets</item>
+        <item>Belgian Endive</item>
+        <item>Bell Peppers</item>
+        <item>Bitter Melon</item>
+        <item>Blackberries</item>
+        <item>Blueberries</item>
+        <item>Bok Choy</item>
+        <item>Boniato</item>
+        <item>Boysenberries</item>
+        <item>Broccoflower</item>
+        <item>Broccoli</item>
+        <item>Brussels Sprouts</item>
+        <item>Cabbage</item>
+        <item>Cactus Pear</item>
+        <item>Cantaloupe</item>
+        <item>Carambola</item>
+        <item>Carrots</item>
+        <item>Casaba Melon</item>
+        <item>Cauliflower</item>
+        <item>Celery</item>
+        <item>Chayote</item>
+        <item>Cherimoya</item>
+        <item>Cherries</item>
+        <item>Coconuts</item>
+        <item>Collard Greens</item>
+        <item>Corn</item>
+        <item>Cranberries</item>
+        <item>Cucumber</item>
+        <item>Dates</item>
+        <item>Dried Plums</item>
+        <item>Eggplant</item>
+        <item>Endive</item>
+        <item>Escarole</item>
+        <item>Feijoa</item>
+        <item>Fennel</item>
+        <item>Figs</item>
+        <item>Garlic</item>
+        <item>Gooseberries</item>
+        <item>Grapefruit</item>
+        <item>Grapes</item>
+        <item>Green Beans</item>
+        <item>Green Onions</item>
+        <item>Greens</item>
+        <item>Guava</item>
+        <item>Hominy</item>
+        <item>Honeydew Melon</item>
+        <item>Horned Melon</item>
+        <item>Iceberg Lettuce</item>
+        <item>Jerusalem Artichoke</item>
+        <item>Jicama</item>
+        <item>Kale</item>
+        <item>Kiwifruit</item>
+        <item>Kohlrabi</item>
+        <item>Kumquat</item>
+        <item>Leeks</item>
+        <item>Lemons</item>
+        <item>Lettuce</item>
+        <item>Lima Beans</item>
+        <item>Limes</item>
+        <item>Longan</item>
+        <item>Loquat</item>
+        <item>Lychee</item>
+        <item>Madarins</item>
+        <item>Malanga</item>
+        <item>Mandarin Oranges</item>
+        <item>Mangos</item>
+        <item>Mulberries</item>
+        <item>Mushrooms</item>
+        <item>Napa</item>
+        <item>Nectarines</item>
+        <item>Okra</item>
+        <item>Onion</item>
+        <item>Oranges</item>
+        <item>Papayas</item>
+        <item>Parsnip</item>
+        <item>Passion Fruit</item>
+        <item>Peaches</item>
+        <item>Pears</item>
+        <item>Peas</item>
+        <item>Peppers</item>
+        <item>Persimmons</item>
+        <item>Pineapple</item>
+        <item>Plantains</item>
+        <item>Plums</item>
+        <item>Pomegranate</item>
+        <item>Potatoes</item>
+        <item>Prickly Pear</item>
+        <item>Prunes</item>
+        <item>Pummelo</item>
+        <item>Pumpkin</item>
+        <item>Quince</item>
+        <item>Radicchio</item>
+        <item>Radishes</item>
+        <item>Raisins</item>
+        <item>Raspberries</item>
+        <item>Red Cabbage</item>
+        <item>Rhubarb</item>
+        <item>Romaine Lettuce</item>
+        <item>Rutabaga</item>
+        <item>Shallots</item>
+        <item>Snow Peas</item>
+        <item>Spinach</item>
+        <item>Sprouts</item>
+        <item>Squash</item>
+        <item>Strawberries</item>
+        <item>String Beans</item>
+        <item>Sweet Potato</item>
+        <item>Tangelo</item>
+        <item>Tangerines</item>
+        <item>Tomatillo</item>
+        <item>Tomato</item>
+        <item>Turnip</item>
+        <item>Ugli Fruit</item>
+        <item>Water Chestnuts</item>
+        <item>Watercress</item>
+        <item>Watermelon</item>
+        <item>Waxed Beans</item>
+        <item>Yams</item>
+        <item>Yellow Squash</item>
+        <item>Yuca/Cassava</item>
+        <item>Zucchini Squash</item>
+    </string-array>
+
 </resources>

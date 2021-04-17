@@ -14,8 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.adapters.ViewPagerAdapter;
-import com.kabasonic.shoppinglist.ui.ArchiweFragment;
-import com.kabasonic.shoppinglist.ui.HomeFragment;
+import com.kabasonic.shoppinglist.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 

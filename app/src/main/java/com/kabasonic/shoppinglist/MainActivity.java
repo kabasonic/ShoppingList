@@ -2,6 +2,8 @@ package com.kabasonic.shoppinglist;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -41,4 +43,6 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
             mToolbar.setVisibility(View.VISIBLE);
         }
     }
+
+
 }

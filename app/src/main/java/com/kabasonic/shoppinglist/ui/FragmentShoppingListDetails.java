@@ -12,11 +12,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
@@ -29,7 +31,7 @@ import com.google.android.material.button.MaterialButton;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.util.Constants;
 
-public class FragmentShoppingListDetails extends Fragment implements View.OnClickListener {
+public class FragmentShoppingListDetails extends Fragment implements View.OnClickListener{
 
     public static final String TAG = "FragmentShopListDetails";
     public static final int REQUEST_TITLE = 1;
@@ -80,22 +82,22 @@ public class FragmentShoppingListDetails extends Fragment implements View.OnClic
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-            Log.d(TAG,"Home back pressed");
-            getActivity().onBackPressed();
+        switch (item.getItemId()){
+            case android.R.id.home:
+                Log.d(TAG,"Home back pressed");
+                getActivity().onBackPressed();
+                break;
+            case R.id.action_search:
+                Log.d(TAG,"Search pressed pressed");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void changeTitle(){
-//        LayoutInflater layoutInflater = getLayoutInflater();
-//        View view = layoutInflater.inflate(R.layout.fragment_dialog_shopping_list, null,false);
-//        view.findViewById(R.id.plug_image_dialog).setVisibility(View.GONE);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
-//                .setView(view);
-//        builder.create();
-//        builder.show();
-
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
     }
 
     @Override
@@ -129,5 +131,7 @@ public class FragmentShoppingListDetails extends Fragment implements View.OnClic
             }
         }
     }
+
+
 
 }

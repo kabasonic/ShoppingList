@@ -1,4 +1,4 @@
-package com.kabasonic.shoppinglist.ui;
+package com.kabasonic.shoppinglist.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kabasonic.shoppinglist.R;
+import com.kabasonic.shoppinglist.ui.HomeDialogFragment;
 
 public class HomeFragment extends Fragment {
     private static final int REQUEST_TITLE = 1;

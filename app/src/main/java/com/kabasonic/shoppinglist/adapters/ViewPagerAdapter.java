@@ -7,7 +7,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.kabasonic.shoppinglist.ui.ArchiweFragment;
-import com.kabasonic.shoppinglist.ui.HomeFragment;
+import com.kabasonic.shoppinglist.ui.home.HomeFragment;
 import com.kabasonic.shoppinglist.ui.ViewPagerFragment;
 
 import java.util.ArrayList;
