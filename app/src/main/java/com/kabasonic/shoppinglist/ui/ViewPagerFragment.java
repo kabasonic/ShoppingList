@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.adapters.ViewPagerAdapter;
+import com.kabasonic.shoppinglist.ui.archiving.ArchivingFragment;
 import com.kabasonic.shoppinglist.ui.home.HomeFragment;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ViewPagerFragment extends Fragment {
 
         ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new HomeFragment());
-        fragmentArrayList.add(new ArchiweFragment());
+        fragmentArrayList.add(new ArchivingFragment());
 
         ViewPager2 viewPager2 = (ViewPager2) view.findViewById(R.id.viewPager);
         viewPagerAdapter = new ViewPagerAdapter(fragmentArrayList,this.getChildFragmentManager(),getLifecycle());

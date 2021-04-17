@@ -28,6 +28,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/rv_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_outline_shopping_cart_24"
@@ -46,6 +47,7 @@
                 android:paddingBottom="16dp">
 
                 <TextView
+                    android:id="@+id/rv_main_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Shopping List"
@@ -53,6 +55,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/rv_sub_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Groceries done 5/30"
@@ -62,6 +65,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/rv_amount_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -71,11 +75,13 @@
                 android:visibility="visible"
                 android:orientation="vertical">
                 <ImageView
+                    android:id="@+id/rv_up_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_outline_add_circle_outline_24"/>
 
                 <EditText
+                    android:id="@+id/rv_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -83,6 +89,7 @@
                     android:textSize="16sp"/>
 
                 <ImageView
+                    android:id="@+id/rv_down_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_baseline_remove_circle_outline_24"/>
@@ -97,6 +104,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/rv_main_bt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_outline_keyboard_arrow_down_24"/>
@@ -105,11 +113,12 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/layout_subrow_shopping_list"
-            android:visibility="gone"/>
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/rv_sub_rv"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            tools:listitem="@layout/layout_subrow_shopping_list"-->
+<!--            android:visibility="gone"/>-->
 
     </LinearLayout>
 

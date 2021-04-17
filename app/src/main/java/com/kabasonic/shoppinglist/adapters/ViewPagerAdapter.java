@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.kabasonic.shoppinglist.ui.ArchiweFragment;
+import com.kabasonic.shoppinglist.ui.archiving.ArchivingFragment;
 import com.kabasonic.shoppinglist.ui.home.HomeFragment;
 import com.kabasonic.shoppinglist.ui.ViewPagerFragment;
 
@@ -29,7 +29,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         if (position == 0) {
             return new HomeFragment();
         }else if(position == 1){
-            return new ArchiweFragment();
+            return new ArchivingFragment();
         }
         return new ViewPagerFragment();
     }

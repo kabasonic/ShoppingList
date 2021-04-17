@@ -23,9 +23,9 @@ public class ShoppingList {
     private boolean archiveStatus;
 
     @ColumnInfo(name = "time_saving")
-    private Date timeSaving;
+    private long timeSaving;
 
-    public ShoppingList(String title, int completedTasks, boolean archiveStatus, Date timeSaving) {
+    public ShoppingList(String title, int completedTasks, boolean archiveStatus, long timeSaving) {
         this.title = title;
         this.completedTasks = completedTasks;
         this.archiveStatus = archiveStatus;
@@ -48,7 +48,27 @@ public class ShoppingList {
         return archiveStatus;
     }
 
-    public Date getTimeSaving() {
+    public long getTimeSaving() {
         return timeSaving;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCompletedTasks(int completedTasks) {
+        this.completedTasks = completedTasks;
+    }
+
+    public void setArchiveStatus(boolean archiveStatus) {
+        this.archiveStatus = archiveStatus;
+    }
+
+    public void setTimeSaving(long timeSaving) {
+        this.timeSaving = timeSaving;
     }
 }

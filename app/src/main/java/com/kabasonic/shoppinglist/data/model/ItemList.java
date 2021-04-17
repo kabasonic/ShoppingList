@@ -71,4 +71,28 @@ public class ItemList {
     public boolean isCompleted() {
         return completed;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIdFkListItem(long idFkListItem) {
+        this.idFkListItem = idFkListItem;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 }

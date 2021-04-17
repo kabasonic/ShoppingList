@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
@@ -14,13 +15,15 @@ import java.util.List;
 
 @Dao
 public interface ShoppingListWithItemsDao {
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(ShoppingListWithItems shoppingListWithItems);
 
-    @Insert
-    void insert(ShoppingListWithItems shoppingListWithItems);
+    @Transaction
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    long update(ShoppingListWithItems shoppingListWithItems);
 
-    @Update
-    void update(ShoppingListWithItems shoppingListWithItems);
-
+    @Transaction
     @Delete
     void delete(ShoppingListWithItems shoppingListWithItems);
 
