@@ -3,6 +3,16 @@
     <string name="tab_1">Shopping Lists</string>
     <string name="tab_2">Archived Shopping Lists</string>
     <string name="shopping_list">Shopping List</string>
+    <string name="change_title_shopping_list">Change title shopping list</string>
+    <string name="new_title">New title</string>
+    <string name="okay">Okay</string>
+    <string name="add_shopping_list_name">Add shopping list name</string>
+    <string name="create_list">Create shopping list</string>
+    <string name="messege_archiving">Archiving your shopping list. If you are sure that you want to archive your shopping list, please install it below. The shopping list will be available in the Archives tab.</string>
+    <string name="archiving_shopping_list">Archiving Shopping List</string>
+    <string name="archiving">Archiving</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 
     <string-array name="product_array">
         <item>Alfalfa Sprouts</item>

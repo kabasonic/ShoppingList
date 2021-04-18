@@ -2,6 +2,7 @@ package com.kabasonic.shoppinglist.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "items_shopping_list")
@@ -24,7 +25,7 @@ public class ItemList {
     private String title;
 
     @ColumnInfo(name = "amount")
-    private String amount;
+    private int amount;
 
     @ColumnInfo(name = "completed")
     private boolean completed;
@@ -35,9 +36,10 @@ public class ItemList {
 //        this.amount = amount;
 //        this.completed = completed;
 //    }
+    @Ignore
+    public ItemList(){}
 
-
-    public ItemList(int image, String title, String amount, boolean completed) {
+    public ItemList(int image, String title, int amount, boolean completed) {
         this.image = image;
         this.title = title;
         this.amount = amount;
@@ -64,7 +66,7 @@ public class ItemList {
         return title;
     }
 
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -88,7 +90,7 @@ public class ItemList {
         this.title = title;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

@@ -10,22 +10,31 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
+import com.kabasonic.shoppinglist.data.model.ItemList;
+import com.kabasonic.shoppinglist.data.model.ShoppingList;
 
 import java.util.List;
 
 @Dao
 public interface ShoppingListWithItemsDao {
+
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insert(ShoppingListWithItems shoppingListWithItems);
+    void insert(ShoppingList shoppingList);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(List<ItemList> itemLists);
 
     @Transaction
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    long update(ShoppingListWithItems shoppingListWithItems);
+    void update(ShoppingList shoppingList);
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(List<ItemList> itemLists);
 
     @Transaction
     @Delete
-    void delete(ShoppingListWithItems shoppingListWithItems);
+    void delete(ShoppingList shoppingList);
+    @Delete
+    void delete(List<ItemList> itemLists);
 
     // get all
     @Transaction
@@ -36,5 +45,10 @@ public interface ShoppingListWithItemsDao {
     @Transaction
     @Query("SELECT * FROM shopping_list WHERE id = :id")
     LiveData<ShoppingListWithItems> getShoppingListWithItems(int id);
+
+    @Query("SELECT MAX(id) FROM shopping_list")
+    int getLastId();
+
+
 
 }

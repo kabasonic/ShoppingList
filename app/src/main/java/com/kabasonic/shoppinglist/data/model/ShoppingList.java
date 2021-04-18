@@ -71,4 +71,5 @@ public class ShoppingList {
     public void setTimeSaving(long timeSaving) {
         this.timeSaving = timeSaving;
     }
+
 }

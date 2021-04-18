@@ -1,8 +1,7 @@
-package com.kabasonic.shoppinglist.ui;
+package com.kabasonic.shoppinglist.ui.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,42 +16,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
-import com.kabasonic.shoppinglist.MainActivity;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.util.Constants;
 
-import org.w3c.dom.Text;
-
-import java.util.Objects;
-
-public class HomeDialogFragment extends DialogFragment implements View.OnClickListener {
-
-    public static final String TAG = "HomeDialogFragment";
-    public static final String TAG_TITLE = "title";
+public class TitleShoppingListDialog extends DialogFragment implements View.OnClickListener {
 
     private Dialog mDialog;
-    private Context mContext;
-    private View view;
     private EditText titleField;
 
-    public HomeDialogFragment(){
+    public TitleShoppingListDialog() {
     }
 
-    public static HomeDialogFragment newInstance(Bundle bundle){
-        HomeDialogFragment homeDialogFragment = new HomeDialogFragment();
-        homeDialogFragment.setArguments(bundle);
-        return new HomeDialogFragment();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        this.mContext = context;
+    public static TitleShoppingListDialog newInstance() {
+        return new TitleShoppingListDialog();
     }
 
     @NonNull
@@ -60,15 +38,14 @@ public class HomeDialogFragment extends DialogFragment implements View.OnClickLi
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         mDialog = super.onCreateDialog(savedInstanceState);
         mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        mDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        mDialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         return mDialog;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        this.view = inflater.inflate(R.layout.fragment_dialog_shopping_list, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_dialog_shopping_list, container, false);
     }
 
     @Override
@@ -79,26 +56,37 @@ public class HomeDialogFragment extends DialogFragment implements View.OnClickLi
         final TextView txSubTitle = (TextView) view.findViewById(R.id.sub_dialog_title);
         final ExtendedFloatingActionButton fabOK = (ExtendedFloatingActionButton) view.findViewById(R.id.bt_list_created);
         final ExtendedFloatingActionButton fabNOK = (ExtendedFloatingActionButton) view.findViewById(R.id.bt_cancel_create_list);
-        this.titleField = (EditText) view.findViewById(R.id.dialog_edit_text);
-        if(getArguments()!= null && getArguments().getInt("type") == 0){
-            image.setVisibility(View.GONE);
-            txMainTitle.setText("Change title shopping list");
-            txSubTitle.setText("Your new title");
-            fabOK.setText("Okay");
+        titleField = (EditText) view.findViewById(R.id.dialog_edit_text);
+
+        switch (Constants.TYPE_TITLE_SHOPPING_DIALOG) {
+            case Constants.TITLE_CHANGED_DIALOG:
+                image.setVisibility(View.VISIBLE);
+                txMainTitle.setText(getResources().getString(R.string.change_title_shopping_list));
+                txSubTitle.setText(getResources().getString(R.string.new_title));
+                fabOK.setText(getResources().getString(R.string.okay));
+                break;
+            case Constants.CREATING_LIST:
+                image.setVisibility(View.VISIBLE);
+                txMainTitle.setText(getResources().getString(R.string.shopping_list));
+                txSubTitle.setText(getResources().getString(R.string.add_shopping_list_name));
+                fabOK.setText(getResources().getString(R.string.create_list));
+                break;
         }
+
         fabOK.setOnClickListener(this);
         fabNOK.setOnClickListener(this);
-
     }
+
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.bt_list_created:
                 Intent intent = new Intent();
-                intent.putExtra(TAG_TITLE, titleField.getText().toString());
-                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                dismiss();
+                intent.putExtra(Constants.TAG_CHANGE_TITLE, titleField.getText().toString());
+                if (getTargetFragment() != null)
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                mDialog.dismiss();
                 break;
             case R.id.bt_cancel_create_list:
                 mDialog.dismiss();

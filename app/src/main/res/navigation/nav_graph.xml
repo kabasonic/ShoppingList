@@ -9,11 +9,14 @@
         android:label="ViewPagerFragment" />
     <fragment
         android:id="@+id/fragmentShoppingListDetails"
-        android:name="com.kabasonic.shoppinglist.ui.FragmentShoppingListDetails"
+        android:name="com.kabasonic.shoppinglist.ui.ShoppingListFragment"
         android:label="FragmentShoppingListDetails" >
         <argument
             android:name="title"
             app:argType="string" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
@@ -21,6 +24,10 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_fragmentShoppingListDetails"
-            app:destination="@id/fragmentShoppingListDetails" />
+            app:destination="@id/fragmentShoppingListDetails"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 </navigation>

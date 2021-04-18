@@ -1,6 +1,8 @@
 package com.kabasonic.shoppinglist.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
+import com.kabasonic.shoppinglist.data.model.ItemList;
 import com.kabasonic.shoppinglist.util.Constants;
 
 import java.util.ArrayList;
@@ -24,9 +28,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     private Context mContext;
     private List<ShoppingListWithItems> mRowList;
-
+    private List<ItemList> mSubList;
+    private ItemList itemList;
     public interface OnItemClickListener{
-        void onClickItemView(int position);
+        void onClickItemView(int position,int id);
     }
 
     OnItemClickListener mListener;
@@ -36,10 +41,42 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         if(mRowList == null){
             this.mRowList = new ArrayList<>();
         }
+        if(mSubList == null){
+            this.mSubList = new ArrayList<>();
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mListener){
+        this.mListener = mListener;
     }
 
     public void setRowList(List<ShoppingListWithItems> mRowList) {
         this.mRowList = mRowList;
+    }
+
+    public void setRowList(ShoppingListWithItems shoppingListWithItems){
+        this.mSubList = shoppingListWithItems.itemListShoppingList;
+    }
+
+    public List<ItemList> getSubList() {
+        return mSubList;
+    }
+
+    public void addItemToRowList(ItemList itemList){
+        this.mSubList.add(0,itemList);
+        notifyItemInserted(0);
+    }
+
+    public void removeItemFromItemsList(int position){
+        Log.d("ADAPATER REMOVE","POSITION " + position);
+        this.mSubList.remove(position);
+    }
+
+    private int getIdAtRow(int position){
+        if(mRowList != null){
+            return mRowList.get(position).shoppingList.getId();
+        }
+        return 0;
     }
 
     @NonNull
@@ -54,9 +91,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.HOME ||
             Constants.TYPE_FRAGMENT_ADAPTER == Constants.ARCHIVING){
             if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.HOME){
-                Glide.with(mContext).load(R.drawable.ic_outline_shopping_cart_24).into(holder.rowIcon);
+                holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_shopping_cart_24));
             }else{
-                Glide.with(mContext).load(R.drawable.ic_outline_archive_24).into(holder.rowIcon);
+                holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_shopping_basket_24));
             }
             holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
             String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
@@ -64,15 +101,41 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             holder.rowAmountLayout.setVisibility(View.GONE);
             holder.rowMainBt.setVisibility(View.GONE);
         }
+        if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.CREATING_LIST){
+            //Drawable drawable = ContextCompat.getDrawable(mContext,mSubList.get(position).getImage());
+            //holder.rowIcon.setImageResource(mSubList.get(position).getImage());
+            Glide.with(mContext).load(mSubList.get(position).getImage()).into(holder.rowIcon);
+            holder.rowMainTitle.setText(mSubList.get(position).getTitle());
+            holder.rowSubTitle.setVisibility(View.GONE);
+            holder.rowAmountLayout.setVisibility(View.VISIBLE);
+            String amount = String.valueOf(mSubList.get(position).getAmount());
+            holder.rowAmount.setText(amount);
+            if(mSubList.get(position).isCompleted()){
+                holder.rowMainBt.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_baseline_check_circle_24));
+            }else{
+                holder.rowMainBt.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_baseline_check_circle_outline_24));
+            }
+
+
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        if(mRowList == null){
-            return 0;
+        if(Constants.TYPE_FRAGMENT_ADAPTER != Constants.CREATING_LIST){
+            if(mRowList != null){
+                return mRowList.size();
+            }else{
+                return 0;
+            }
+        }else{
+            if(mSubList!=null){
+                return mSubList.size();
+            }else {
+                return 0;
+            }
         }
-        return mRowList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +145,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         public EditText rowAmount;
         public LinearLayout rowAmountLayout;
 
-        public ViewHolder(@NonNull View itemView, OnItemClickListener mListener) {
+
+
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener mListener) {
             super(itemView);
             //imageView
             rowIcon = itemView.findViewById(R.id.rv_icon);
@@ -97,19 +162,77 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             rowMainTitle = itemView.findViewById(R.id.rv_main_title);
             rowSubTitle = itemView.findViewById(R.id.rv_sub_title);
 
+            rowUpCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    countAmount(true);
+                }
+            });
+            rowDownCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    countAmount(false);
+                }
+            });
+
+            rowIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+
+            rowMainBt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                isCompleted();
+                notifyDataSetChanged();
+                }
+            });
+
+
+
             if(Constants.TYPE_FRAGMENT_ADAPTER != Constants.ARCHIVING){
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(mListener!=null){
                             int position = getAdapterPosition();
+                            int id = getIdAtRow(position);
                             if(position!=RecyclerView.NO_POSITION){
-                                mListener.onClickItemView(position);
+                                mListener.onClickItemView(position, id);
                             }
                         }
                     }
                 });
             }
         }
+
+        private void countAmount(boolean action){
+            int amount = Integer.parseInt(rowAmount.getText().toString());
+            if(action && 0 <= amount && amount <= 99){
+                amount++;
+                rowAmount.setText("0");
+            }else if(!action && 0 < amount && amount < 99){
+                amount--;
+                rowAmount.setText("0");
+            }else{
+                rowAmount.setText("0");
+            }
+            rowAmount.setText(String.valueOf(amount));
+            int position = getAdapterPosition();
+            if(position!=RecyclerView.NO_POSITION){
+                itemList = mSubList.get(position);
+                itemList.setAmount(amount);
+                mSubList.set(position,itemList);
+            }
+        }
+        private void isCompleted(){
+            int position = getAdapterPosition();
+            itemList = mSubList.get(position);
+            itemList.setCompleted(!mSubList.get(position).isCompleted());
+            mSubList.set(position,itemList);
+        }
+
     }
 }
