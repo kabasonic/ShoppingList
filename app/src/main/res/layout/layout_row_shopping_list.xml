@@ -33,7 +33,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="centerInside"
-                        app:srcCompat="@drawable/shopping_bag" />
+                        app:srcCompat="@drawable/ic_outline_shopping_cart_24" />
 
                 </LinearLayout>
 

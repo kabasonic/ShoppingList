@@ -1,6 +1,7 @@
 package com.kabasonic.shoppinglist.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,25 +51,23 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         this.mListener = mListener;
     }
 
-    public void setRowList(List<ShoppingListWithItems> mRowList) {
+    //set home fragment
+    public void setRowListHome(List<ShoppingListWithItems> mRowList) {
         this.mRowList = mRowList;
     }
-
-    public void setRowList(ShoppingListWithItems shoppingListWithItems){
+    //set shopping fragment
+    public void setRowListShopping(ShoppingListWithItems shoppingListWithItems){
         this.mSubList = shoppingListWithItems.itemListShoppingList;
     }
 
-    public List<ItemList> getSubList() {
-        return mSubList;
-    }
-
+    //set shopping fragment
     public void addItemToRowList(ItemList itemList){
         this.mSubList.add(0,itemList);
         notifyItemInserted(0);
+        Log.d("TAG","List size: " + mSubList.size());
     }
 
     public void removeItemFromItemsList(int position){
-        Log.d("ADAPATER REMOVE","POSITION " + position);
         this.mSubList.remove(position);
     }
 
@@ -93,7 +92,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.HOME){
                 holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_shopping_cart_24));
             }else{
-                holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_shopping_basket_24));
+                holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_archive_24));
             }
             holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
             String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
@@ -102,9 +101,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             holder.rowMainBt.setVisibility(View.GONE);
         }
         if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.CREATING_LIST){
-            //Drawable drawable = ContextCompat.getDrawable(mContext,mSubList.get(position).getImage());
-            //holder.rowIcon.setImageResource(mSubList.get(position).getImage());
-            Glide.with(mContext).load(mSubList.get(position).getImage()).into(holder.rowIcon);
+            holder.rowIcon.setImageResource(mSubList.get(position).getImage());
             holder.rowMainTitle.setText(mSubList.get(position).getTitle());
             holder.rowSubTitle.setVisibility(View.GONE);
             holder.rowAmountLayout.setVisibility(View.VISIBLE);
@@ -112,7 +109,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             holder.rowAmount.setText(amount);
             if(mSubList.get(position).isCompleted()){
                 holder.rowMainBt.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_baseline_check_circle_24));
+                holder.rowMainTitle.setPaintFlags(holder.rowMainTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             }else{
+                holder.rowMainTitle.setPaintFlags(0);
                 holder.rowMainBt.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_baseline_check_circle_outline_24));
             }
 
@@ -120,6 +119,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         }
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -178,7 +179,13 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             rowIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if(mListener!=null){
+                        int position = getAdapterPosition();
+                        int id = getIdAtRow(position);
+                        if(position!=RecyclerView.NO_POSITION){
+                            mListener.onClickItemView(position,id);
+                        }
+                    }
                 }
             });
 

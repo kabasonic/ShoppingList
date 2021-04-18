@@ -9,7 +9,7 @@
         android:label="ViewPagerFragment" />
     <fragment
         android:id="@+id/fragmentShoppingListDetails"
-        android:name="com.kabasonic.shoppinglist.ui.ShoppingListFragment"
+        android:name="com.kabasonic.shoppinglist.ui.shopping.ShoppingListFragment"
         android:label="FragmentShoppingListDetails" >
         <argument
             android:name="title"

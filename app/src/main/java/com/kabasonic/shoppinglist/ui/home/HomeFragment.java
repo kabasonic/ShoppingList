@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         homeViewModel.getAllShoppingListWithItems().observe(getViewLifecycleOwner(), new Observer<List<ShoppingListWithItems>>() {
             @Override
             public void onChanged(List<ShoppingListWithItems> shoppingListWithItems) {
-                mAdapter.setRowList(shoppingListWithItems);
+                mAdapter.setRowListHome(shoppingListWithItems);
                 mAdapter.notifyDataSetChanged();
             }
         });

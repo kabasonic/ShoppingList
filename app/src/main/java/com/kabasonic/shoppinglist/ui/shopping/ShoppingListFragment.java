@@ -1,9 +1,10 @@
-package com.kabasonic.shoppinglist.ui;
+package com.kabasonic.shoppinglist.ui.shopping;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,11 +35,15 @@ import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.adapters.ShoppingListAdapter;
 import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
 import com.kabasonic.shoppinglist.data.model.ItemList;
+import com.kabasonic.shoppinglist.data.model.ShoppingList;
 import com.kabasonic.shoppinglist.ui.dialogs.ArchivingDialogs;
 import com.kabasonic.shoppinglist.ui.dialogs.IconDialog;
 import com.kabasonic.shoppinglist.ui.dialogs.TitleShoppingListDialog;
 import com.kabasonic.shoppinglist.ui.home.HomeViewModel;
 import com.kabasonic.shoppinglist.util.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShoppingListFragment extends Fragment implements View.OnClickListener {
 
@@ -51,8 +55,10 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
     private RecyclerView recyclerView;
     private Toolbar mToolbar;
     private LinearLayout layoutPlug;
-    private ShoppingListWithItems shoppingListWithItems;
-    private ItemList itemList = new ItemList();
+    private ShoppingViewModel viewModel;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private int id = 0;
+    private ImageView newItemIcon;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -63,9 +69,10 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(requireActivity()).get(ShoppingViewModel.class);
         Constants.TYPE_FRAGMENT_ADAPTER = Constants.CREATING_LIST;
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
-        return inflater.inflate(R.layout.fragment_shopping_list_details, container, false);
+        return inflater.inflate(R.layout.fragment_shopping_list_details, container,false);
     }
 
     @Override
@@ -81,24 +88,49 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         buildAutoCompleteTextAdapter(getResources().getStringArray(R.array.product_array));
         //set ItemTouchHelper for current recyclerView
         setItemTouchHelper();
+        //incomingArgument
+        incomingArguments();
 
 
-        int id = getArguments().getInt("id_shopping_list");
 
-        homeViewModel.getShoppingListWithItems(id).observe(getViewLifecycleOwner(), new Observer<ShoppingListWithItems>() {
-            @Override
-            public void onChanged(ShoppingListWithItems shoppingListWithItems) {
-                if (!shoppingListWithItems.itemListShoppingList.isEmpty()) {
-                    mCollapsingToolbarLayout.setTitle(shoppingListWithItems.shoppingList.getTitle());
-                    layoutPlug.setVisibility(View.GONE);
-                    mAdapter.setRowList(shoppingListWithItems);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    layoutPlug.setVisibility(View.VISIBLE);
+
+    }
+    private void incomingArguments(){
+        if(getArguments() != null){
+             this.id = getArguments().getInt("id_shopping_list");
+        }
+        Log.d("TAG","ID: " + id);
+        if(id != 0){
+            homeViewModel.getShoppingListWithItems(id).observe(getViewLifecycleOwner(), new Observer<ShoppingListWithItems>() {
+                @Override
+                public void onChanged(ShoppingListWithItems shoppingListWithItems) {
+                    if (!shoppingListWithItems.itemListShoppingList.isEmpty()) {
+                        mCollapsingToolbarLayout.setTitle(shoppingListWithItems.shoppingList.getTitle());
+                        //viewModel.setListIsEmpty(false);
+                        mAdapter.setRowListShopping(shoppingListWithItems);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
                 }
+            });
+        }else {
+            recyclerView.setVisibility(View.VISIBLE);
+            List<ItemList> itemLists = new ArrayList<>();
+            ShoppingListWithItems shoppingListWithItems = new ShoppingListWithItems(new ShoppingList(),itemLists);
+            mAdapter.setRowListShopping(shoppingListWithItems);
+            mAdapter.notifyDataSetChanged();
+//            viewModel.setListIsEmpty(false);
+//            mAdapter.setRowListShopping(itemLists);
+//            mAdapter.notifyDataSetChanged();
+        }
 
-            }
-        });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
     }
 
     private void setItemTouchHelper() {
@@ -136,11 +168,11 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         MaterialButton mBtEditTitle = (MaterialButton) view.findViewById(R.id.bt_edit_title);
         MaterialButton mBtArchiving = (MaterialButton) view.findViewById(R.id.bt_archiving);
         MaterialButton mBtShare = (MaterialButton) view.findViewById(R.id.bt_share);
-        ImageView newItemIcon = (ImageView) view.findViewById(R.id.choose_icon_item);
+        newItemIcon = (ImageView) view.findViewById(R.id.choose_icon_item);
         ImageView addItemToList = (ImageView) view.findViewById(R.id.rv_add_item);
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_shopping_list);
         editText = (AutoCompleteTextView) view.findViewById(R.id.actv);
-        layoutPlug = (LinearLayout) view.findViewById(R.id.plug_layout_list_details);
+        //layoutPlug = (LinearLayout) view.findViewById(R.id.plug_layout_list_details);
         mBtEditTitle.setOnClickListener(this);
         mBtArchiving.setOnClickListener(this);
         mBtShare.setOnClickListener(this);
@@ -151,11 +183,10 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
     private void buildAdapter() {
         mAdapter = new ShoppingListAdapter(mContext);
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -193,6 +224,32 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getIcon().observe(getViewLifecycleOwner(), integer -> {
+            if (integer != null){
+                newItemIcon.setImageResource(integer);
+                Constants.TEMP_ICON = integer;
+            }
+        });
+        viewModel.getTitle().observe(getViewLifecycleOwner(), string -> {
+            mCollapsingToolbarLayout.setTitle(string);
+        });
+        viewModel.getArchiving().observe(getViewLifecycleOwner(), aBoolean -> {
+            //action archiving
+        });
+//        viewModel.getListIsEmpty().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+//            @Override
+//            public void onChanged(Boolean aBoolean) {
+//                if(aBoolean){
+//                    layoutPlug.setVisibility(View.VISIBLE);
+//                }else{
+//                    layoutPlug.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -222,17 +279,20 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
                 iconDialog.show(getFragmentManager(), iconDialog.getTag());
                 break;
             case R.id.rv_add_item:
-                int icon = R.drawable.shopping_bag;
-                String title = editText.getText().toString();
-                if (!title.isEmpty()) {
-                    ItemList itemList = new ItemList(icon, title, 1, false);
-                    mAdapter.addItemToRowList(itemList);
-                    recyclerView.smoothScrollToPosition(0);
+                if (!editText.getText().toString().isEmpty()) {
+                    mAdapter.addItemToRowList(new ItemList(Constants.TEMP_ICON, editText.getText().toString(), 1, false));
+                    mAdapter.notifyDataSetChanged();
+                    //recyclerView.smoothScrollToPosition(0);
+                  //  viewModel.setListIsEmpty(false);
                 }
-
+                newItemIcon.setImageResource(R.drawable.ic_baseline_add_shopping_cart_24);
+              //  viewModel.setListIsEmpty(false);
                 break;
         }
+
+
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -241,21 +301,23 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
             switch (requestCode) {
                 case Constants.REQUEST_CHANGE_TITLE:
                     // get new title
-                    CharSequence newTitle = (String) data.getStringExtra(Constants.TAG_CHANGE_TITLE);
+                    String newTitle = data.getStringExtra(Constants.TAG_CHANGE_TITLE);
                     if (newTitle.length() != 0) {
                         //action
+                        viewModel.setTitle(newTitle);
                     }
                     break;
                 case Constants.REQUEST_CHANGE_ICON:
                     //get new icon
                     int selectedIcon = data.getIntExtra(Constants.TAG_CHANGE_ICON, Constants.DEFAULT_ICON);
-
+                    viewModel.setIcon(selectedIcon);
                     //action
                     break;
                 case Constants.REQUEST_CHANGE_ARCHIVING:
                     //get archiving status list
                     boolean archiving = data.getBooleanExtra(Constants.TAG_CHANGE_ARCHIVING, false);
                     //action
+                    viewModel.setArchiving(archiving);
                     break;
             }
         }

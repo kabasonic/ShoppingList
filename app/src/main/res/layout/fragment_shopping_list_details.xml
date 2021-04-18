@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
+        android:fillViewport="true"
         app:behavior_overlapTop="78dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -52,7 +53,6 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/flexible.example.cardview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
@@ -205,24 +205,22 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_shopping_list"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             tools:listitem="@layout/layout_row_shopping_list" />
 
-                        <LinearLayout
-                            android:id="@+id/plug_layout_list_details"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/plug_layout_list_details"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent">-->
 
-                            <include
-                                layout="@layout/plug_basket"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
+<!--                            <include-->
+<!--                                layout="@layout/plug_basket"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent" />-->
+<!--                        </LinearLayout>-->
                     </LinearLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

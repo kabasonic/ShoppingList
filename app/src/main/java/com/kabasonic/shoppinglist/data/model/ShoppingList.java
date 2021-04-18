@@ -2,6 +2,7 @@ package com.kabasonic.shoppinglist.data.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.sql.Date;
@@ -24,6 +25,9 @@ public class ShoppingList {
 
     @ColumnInfo(name = "time_saving")
     private long timeSaving;
+
+    @Ignore
+    public ShoppingList(){}
 
     public ShoppingList(String title, int completedTasks, boolean archiveStatus, long timeSaving) {
         this.title = title;

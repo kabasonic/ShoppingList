@@ -24,4 +24,6 @@ public class Constants implements Serializable {
     public static final int REQUEST_CHANGE_TITLE = 1;
     public static final int REQUEST_CHANGE_ICON = 2;
     public static final int REQUEST_CHANGE_ARCHIVING = 3;
+
+    public static int TEMP_ICON = 0;
 }
