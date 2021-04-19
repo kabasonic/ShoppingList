@@ -58,7 +58,7 @@ public class IconAdapter extends RecyclerView.Adapter<IconAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(mContext).load(ContextCompat.getDrawable(mContext,ArrayIcons[position])).into(holder.rowIcon);
-        holder.titleIcon.setText(mNameTitle[position]);
+        //holder.titleIcon.setText(mNameTitle[position]);
     }
 
     @Override
