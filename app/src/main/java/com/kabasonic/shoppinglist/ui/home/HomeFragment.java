@@ -22,6 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.adapters.ShoppingListAdapter;
 import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
+import com.kabasonic.shoppinglist.data.model.ItemList;
+import com.kabasonic.shoppinglist.data.model.ShoppingList;
 import com.kabasonic.shoppinglist.ui.dialogs.TitleShoppingListDialog;
 import com.kabasonic.shoppinglist.util.Constants;
 
@@ -45,7 +47,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Constants.TYPE_FRAGMENT_ADAPTER = 0;
+        Constants.TYPE_FRAGMENT_ADAPTER = Constants.HOME;
         homeViewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         this.view = inflater.inflate(R.layout.home_fragment_layout, container, false);
         return view;
@@ -66,10 +68,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
+
         homeViewModel.getAllShoppingListWithItems().observe(getViewLifecycleOwner(), new Observer<List<ShoppingListWithItems>>() {
             @Override
-            public void onChanged(List<ShoppingListWithItems> shoppingListWithItems) {
-                mAdapter.setRowListHome(shoppingListWithItems);
+            public void onChanged(List<ShoppingListWithItems> shoppingList) {
+                mAdapter.setRowListHome(shoppingList);
                 mAdapter.notifyDataSetChanged();
             }
         });

@@ -24,6 +24,8 @@ public class ViewPagerFragment extends Fragment {
 
     private ViewPagerAdapter viewPagerAdapter;
     public static final String[] titleTab = {"Shopping lists", "Arcived Shopping Lists"};
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,9 +39,15 @@ public class ViewPagerFragment extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(fragmentArrayList,this.getChildFragmentManager(),getLifecycle());
         viewPager2.setAdapter(viewPagerAdapter);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
-        new TabLayoutMediator(tabLayout, viewPager2,
-                (tab, position) -> tab.setText("OBJECT " + (position + 1))
-        ).attach();
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                if(position == 0)
+                    tab.setText(getResources().getString(R.string.shopping_list));
+                else
+                    tab.setText(getResources().getString(R.string.archiving));
+            }
+        }).attach();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -60,6 +68,8 @@ public class ViewPagerFragment extends Fragment {
 
         return view;
     }
+
+
 
 
 }

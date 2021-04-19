@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.kabasonic.shoppinglist.R;
 import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
 import com.kabasonic.shoppinglist.data.model.ItemList;
+import com.kabasonic.shoppinglist.data.model.ShoppingList;
 import com.kabasonic.shoppinglist.util.Constants;
 
 import java.util.ArrayList;
@@ -67,6 +68,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         Log.d("TAG","List size: " + mSubList.size());
     }
 
+
+
+
     public List<ShoppingListWithItems> getRowList() {
         return mRowList;
     }
@@ -81,6 +85,11 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         }
         return 0;
     }
+
+    public void setListState(List<ItemList> mSubList){
+        this.mSubList = mSubList;
+    }
+
     protected int countCompletedTask(){
         int i = 0;
         for(ItemList item: mSubList){
@@ -109,18 +118,24 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public void onBindViewHolder(@NonNull ShoppingListAdapter.ViewHolder holder, int position) {
         if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.HOME ||
-            Constants.TYPE_FRAGMENT_ADAPTER == Constants.ARCHIVING){
+                Constants.TYPE_FRAGMENT_ADAPTER == Constants.ARCHIVING){
             if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.HOME){
                 holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_shopping_cart_24));
-            }else{
+                holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
+                //String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
+                String subTitle = getCompletedTask(mRowList.get(position));
+                holder.rowSubTitle.setText(subTitle);
+                holder.rowAmountLayout.setVisibility(View.GONE);
+                holder.rowMainBt.setVisibility(View.GONE);
+            }else {
                 holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_archive_24));
+                holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
+                //String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
+                String subTitle = getCompletedTask(mRowList.get(position));
+                holder.rowSubTitle.setText(subTitle);
+                holder.rowAmountLayout.setVisibility(View.GONE);
+                holder.rowMainBt.setVisibility(View.GONE);
             }
-            holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
-            //String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
-            String subTitle = getCompletedTask(mRowList.get(position));
-            holder.rowSubTitle.setText(subTitle);
-            holder.rowAmountLayout.setVisibility(View.GONE);
-            holder.rowMainBt.setVisibility(View.GONE);
         }
         if(Constants.TYPE_FRAGMENT_ADAPTER == Constants.CREATING_LIST){
             holder.rowIcon.setImageResource(mSubList.get(position).getImage());
@@ -221,8 +236,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             rowMainBt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                isCompleted();
-                notifyDataSetChanged();
+                    isCompleted();
+                    notifyDataSetChanged();
                 }
             });
 

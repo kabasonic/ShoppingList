@@ -116,25 +116,25 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:gravity="center"-->
+<!--                            android:orientation="vertical">-->
 
-                            <com.google.android.material.button.MaterialButton
-                                android:id="@+id/bt_share"
-                                style="@style/Widget.AppCompat.Button.Borderless"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="Share"
-                                android:textColor="@color/black"
-                                app:icon="@drawable/ic_outline_share_24"
-                                app:iconGravity="top"
-                                app:iconTint="@color/black" />
+<!--                            <com.google.android.material.button.MaterialButton-->
+<!--                                android:id="@+id/bt_share"-->
+<!--                                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:text="Share"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                app:icon="@drawable/ic_outline_share_24"-->
+<!--                                app:iconGravity="top"-->
+<!--                                app:iconTint="@color/black" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -237,6 +237,7 @@
                             tools:listitem="@layout/layout_row_shopping_list" />
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/plug_layout_list_details"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">

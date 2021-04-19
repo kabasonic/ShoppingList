@@ -1,5 +1,7 @@
 package com.kabasonic.shoppinglist.data.model;
 
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,7 +10,7 @@ import androidx.room.PrimaryKey;
 import java.sql.Date;
 
 @Entity(tableName = "shopping_list")
-public class ShoppingList {
+public class ShoppingList  {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

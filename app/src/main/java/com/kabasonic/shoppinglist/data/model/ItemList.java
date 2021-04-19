@@ -1,12 +1,15 @@
 package com.kabasonic.shoppinglist.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "items_shopping_list")
-public class ItemList {
+public class ItemList implements Parcelable {
 
     @ColumnInfo(name = "item_list_id")
     @PrimaryKey(autoGenerate = true)
@@ -45,6 +48,42 @@ public class ItemList {
         this.amount = amount;
         this.completed = completed;
     }
+
+    protected ItemList(Parcel in) {
+        id = in.readInt();
+        idFkListItem = in.readLong();
+        image = in.readInt();
+        title = in.readString();
+        amount = in.readInt();
+        completed = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeLong(idFkListItem);
+        dest.writeInt(image);
+        dest.writeString(title);
+        dest.writeInt(amount);
+        dest.writeByte((byte) (completed ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ItemList> CREATOR = new Creator<ItemList>() {
+        @Override
+        public ItemList createFromParcel(Parcel in) {
+            return new ItemList(in);
+        }
+
+        @Override
+        public ItemList[] newArray(int size) {
+            return new ItemList[size];
+        }
+    };
 
     public int getId() {
         return id;

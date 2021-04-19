@@ -38,7 +38,7 @@ public class ArchivingFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Constants.TYPE_FRAGMENT_ADAPTER = 1;
+        Constants.TYPE_FRAGMENT_ADAPTER = Constants.HOME;
         viewModel = new ViewModelProvider(requireActivity()).get(ArchivingViewModel.class);
         return inflater.inflate(R.layout.archiwe_fragment_layout, container, false);
     }

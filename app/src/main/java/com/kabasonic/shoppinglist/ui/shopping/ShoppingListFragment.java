@@ -1,9 +1,12 @@
 package com.kabasonic.shoppinglist.ui.shopping;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.CursorWindow;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,6 +65,7 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
     private int id = 0;
     private ImageView newItemIcon;
     private ShoppingList shoppingList;
+    private List<ItemList> savedStateList;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -206,7 +210,7 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar_sopping_list);
         MaterialButton mBtEditTitle = (MaterialButton) view.findViewById(R.id.bt_edit_title);
         MaterialButton mBtArchiving = (MaterialButton) view.findViewById(R.id.bt_archiving);
-        MaterialButton mBtShare = (MaterialButton) view.findViewById(R.id.bt_share);
+        //MaterialButton mBtShare = (MaterialButton) view.findViewById(R.id.bt_share);
         MaterialButton mBtDelete = (MaterialButton) view.findViewById(R.id.bt_delete_list_shopping);
         newItemIcon = (ImageView) view.findViewById(R.id.choose_icon_item);
         ImageView addItemToList = (ImageView) view.findViewById(R.id.rv_add_item);
@@ -215,7 +219,7 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         layoutPlug = (LinearLayout) view.findViewById(R.id.plug_layout_list_details);
         mBtEditTitle.setOnClickListener(this);
         mBtArchiving.setOnClickListener(this);
-        mBtShare.setOnClickListener(this);
+        //mBtShare.setOnClickListener(this);
         mBtDelete.setOnClickListener(this);
         addItemToList.setOnClickListener(this);
         newItemIcon.setOnClickListener(this);
@@ -227,8 +231,12 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         mLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+        if(savedStateList != null && !savedStateList.isEmpty()){
+            mAdapter.setListState(savedStateList);
+        }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -244,26 +252,26 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //implementation Query to Room
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //implementation Query to Room
-                return false;
-            }
-        });
-    }
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.main_menu, menu);
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) searchItem.getActionView();
+//        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                //implementation Query to Room
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                //implementation Query to Room
+//                return false;
+//            }
+//        });
+//    }
 
     @Override
     public void onResume() {
@@ -290,10 +298,27 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
                 }
             }
         });
-
-
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            if(savedStateList == null){
+                savedStateList = new ArrayList<>();
+            }
+            savedStateList = savedInstanceState.<ItemList>getParcelableArrayList(Constants.KEY_STATE_SHOPPING_LIST);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Constants.KEY_STATE_SHOPPING_LIST, (ArrayList<? extends Parcelable>) mAdapter.getSubList());
+    }
+
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         Bundle bundle = new Bundle();
@@ -312,9 +337,9 @@ public class ShoppingListFragment extends Fragment implements View.OnClickListen
                 assert getFragmentManager() != null;
                 archivingDialogs.show(getFragmentManager(), archivingDialogs.getTag());
                 break;
-            case R.id.bt_share:
-                //function share
-                break;
+//            case R.id.bt_share:
+//                //function share
+//                break;
             case R.id.choose_icon_item:
                 IconDialog iconDialog = new IconDialog();
                 iconDialog.setTargetFragment(this, Constants.REQUEST_CHANGE_ICON);

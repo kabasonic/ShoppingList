@@ -26,6 +26,7 @@ public class Constants implements Serializable {
     public static final int REQUEST_CHANGE_ARCHIVING = 3;
     public static final int REQUEST_DELETE = 4;
 
+    public static final String KEY_STATE_SHOPPING_LIST = "KEY_STATE_SHOPPING_LIST";
 
     public static int TEMP_ICON = R.drawable.ic_baseline_add_shopping_cart_24;
 }
