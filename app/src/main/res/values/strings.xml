@@ -13,6 +13,8 @@
     <string name="archiving">Archiving</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="delete_shopping_list">Delete shopping list</string>
+    <string name="messege_delete">Are you sure you want to delete your shopping list? It will not be impossible to restore it. If you agree, click ok.</string>
 
     <string-array name="product_array">
         <item>Alfalfa Sprouts</item>

@@ -67,6 +67,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         Log.d("TAG","List size: " + mSubList.size());
     }
 
+    public List<ShoppingListWithItems> getRowList() {
+        return mRowList;
+    }
+
     public void removeItemFromItemsList(int position){
         this.mSubList.remove(position);
     }
@@ -76,6 +80,23 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             return mRowList.get(position).shoppingList.getId();
         }
         return 0;
+    }
+    protected int countCompletedTask(){
+        int i = 0;
+        for(ItemList item: mSubList){
+            if(item.isCompleted()){
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public ItemList getAtItemList(int position){
+        return mSubList.get(position);
+    }
+
+    public List<ItemList> getSubList() {
+        return mSubList;
     }
 
     @NonNull
@@ -95,7 +116,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 holder.rowIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_outline_archive_24));
             }
             holder.rowMainTitle.setText(mRowList.get(position).shoppingList.getTitle());
-            String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
+            //String subTitle = "Groceries done " + String.valueOf(mRowList.get(position).shoppingList.getCompletedTasks());
+            String subTitle = getCompletedTask(mRowList.get(position));
             holder.rowSubTitle.setText(subTitle);
             holder.rowAmountLayout.setVisibility(View.GONE);
             holder.rowMainBt.setVisibility(View.GONE);
@@ -114,13 +136,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 holder.rowMainTitle.setPaintFlags(0);
                 holder.rowMainBt.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_baseline_check_circle_outline_24));
             }
-
-
         }
-
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -137,6 +154,18 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 return 0;
             }
         }
+    }
+
+    public String getCompletedTask(ShoppingListWithItems itemList){
+        int i = 0 ;
+        for(ItemList item: itemList.itemListShoppingList){
+            if(item.isCompleted()){
+                i++;
+            }
+        }
+        String result = "Groceries done  " + String.valueOf(i) + "/"
+                +String.valueOf(itemList.itemListShoppingList.size());
+        return result;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

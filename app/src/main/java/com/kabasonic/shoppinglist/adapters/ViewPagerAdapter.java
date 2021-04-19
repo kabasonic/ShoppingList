@@ -9,6 +9,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.kabasonic.shoppinglist.ui.archiving.ArchivingFragment;
 import com.kabasonic.shoppinglist.ui.home.HomeFragment;
 import com.kabasonic.shoppinglist.ui.ViewPagerFragment;
+import com.kabasonic.shoppinglist.util.Constants;
 
 import java.util.ArrayList;
 

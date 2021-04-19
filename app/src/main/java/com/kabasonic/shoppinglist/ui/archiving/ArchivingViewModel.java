@@ -14,15 +14,15 @@ import java.util.List;
 public class ArchivingViewModel extends AndroidViewModel {
 
     private ShoppingListWithItemsRepo repo;
-    private LiveData<List<ShoppingListWithItems>> allShoppingListWithItems;
+    private LiveData<List<ShoppingListWithItems>> allArchivingShoppingListWithItems;
 
     public ArchivingViewModel(@NonNull Application application) {
         super(application);
         this.repo = new ShoppingListWithItemsRepo(application);
-        this.allShoppingListWithItems = repo.getAllShoppingListWithItems();
+        this.allArchivingShoppingListWithItems = repo.getAllArchivingShoppingListWithItems();
     }
 
-    public LiveData<List<ShoppingListWithItems>> getAllShoppingListWithItems() {
-        return allShoppingListWithItems;
+    public LiveData<List<ShoppingListWithItems>> getAllArchivingShoppingListWithItems() {
+        return allArchivingShoppingListWithItems;
     }
 }

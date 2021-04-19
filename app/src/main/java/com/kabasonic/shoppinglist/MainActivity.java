@@ -32,10 +32,6 @@ public class MainActivity extends AppCompatActivity implements NavController.OnD
         //delete database
         //this.deleteDatabase("shopping_database");
 
-
-//        NavOptions.Builder navBuilder =  new NavOptions.Builder();
-//        navBuilder.setEnterAnim(R.anim.slide_in_right).setExitAnim(R.anim.slide_out_left).setPopEnterAnim(R.anim.slide_in_left).setPopExitAnim(R.anim.slide_out_right);
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         if (navHostFragment != null) {
             navController = navHostFragment.getNavController();

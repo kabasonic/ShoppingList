@@ -25,11 +25,15 @@ public class TitleShoppingListDialog extends DialogFragment implements View.OnCl
 
     private Dialog mDialog;
     private EditText titleField;
-
+    private String title;
     public TitleShoppingListDialog() {
     }
 
-    public static TitleShoppingListDialog newInstance() {
+    public static TitleShoppingListDialog newInstance(String title) {
+        TitleShoppingListDialog titleShoppingListDialog = new TitleShoppingListDialog();
+        Bundle args = new Bundle();
+        args.putString("title_from_shopping_dialog", title);
+        titleShoppingListDialog.setArguments(args);
         return new TitleShoppingListDialog();
     }
 
@@ -51,13 +55,16 @@ public class TitleShoppingListDialog extends DialogFragment implements View.OnCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(getArguments() != null){
+            title = getArguments().getString("title_from_shopping_dialog");
+        }
         final ImageView image = (ImageView) view.findViewById(R.id.plug_image_dialog);
         final TextView txMainTitle = (TextView) view.findViewById(R.id.maint_dialog_title);
         final TextView txSubTitle = (TextView) view.findViewById(R.id.sub_dialog_title);
         final ExtendedFloatingActionButton fabOK = (ExtendedFloatingActionButton) view.findViewById(R.id.bt_list_created);
         final ExtendedFloatingActionButton fabNOK = (ExtendedFloatingActionButton) view.findViewById(R.id.bt_cancel_create_list);
         titleField = (EditText) view.findViewById(R.id.dialog_edit_text);
-
+        titleField.setHint(title);
         switch (Constants.TYPE_TITLE_SHOPPING_DIALOG) {
             case Constants.TITLE_CHANGED_DIALOG:
                 image.setVisibility(View.VISIBLE);
@@ -82,14 +89,19 @@ public class TitleShoppingListDialog extends DialogFragment implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_list_created:
-                Intent intent = new Intent();
-                intent.putExtra(Constants.TAG_CHANGE_TITLE, titleField.getText().toString());
-                if (getTargetFragment() != null)
+                if(!titleField.getText().toString().isEmpty()){
+                    Intent intent = new Intent();
+                    if(Constants.TYPE_TITLE_SHOPPING_DIALOG == Constants.TITLE_CHANGED_DIALOG){
+                        intent.putExtra("title_from_shopping_dialog", titleField.getText().toString());
+                    }else {
+                        intent.putExtra("title_home_shopping", titleField.getText().toString());
+                    }
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                mDialog.dismiss();
-                break;
+                    dismiss();
+                }
+                 break;
             case R.id.bt_cancel_create_list:
-                mDialog.dismiss();
+                dismiss();
                 break;
         }
     }

@@ -136,6 +136,26 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/bt_delete_list_shopping"
+                                style="@style/Widget.AppCompat.Button.Borderless"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:text="Delete"
+                                android:textColor="@color/black"
+                                app:icon="@drawable/ic_baseline_delete_24"
+                                app:iconGravity="top"
+                                app:iconTint="@color/black" />
+
+                        </LinearLayout>
+
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/linear2"
@@ -198,6 +218,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -205,22 +226,28 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_shopping_list"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             tools:listitem="@layout/layout_row_shopping_list" />
 
-<!--                        <LinearLayout-->
-<!--                            android:id="@+id/plug_layout_list_details"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="match_parent">-->
+                        <LinearLayout
+                            android:id="@+id/plug_layout_list_details"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-<!--                            <include-->
-<!--                                layout="@layout/plug_basket"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="match_parent" />-->
-<!--                        </LinearLayout>-->
+                            <include
+                                layout="@layout/plug_basket"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+                    </FrameLayout>
+
                     </LinearLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>

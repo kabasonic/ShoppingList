@@ -3,6 +3,7 @@ package com.kabasonic.shoppinglist.data.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Ignore;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -38,13 +39,17 @@ public interface ShoppingListWithItemsDao {
 
     // get all
     @Transaction
-    @Query("SELECT * FROM shopping_list")
+    @Query("SELECT * FROM shopping_list WHERE backup_states = 0 ORDER BY time_saving DESC")
     LiveData<List<ShoppingListWithItems>> getShoppingListWithItems();
 
     // get by id
     @Transaction
     @Query("SELECT * FROM shopping_list WHERE id = :id")
     LiveData<ShoppingListWithItems> getShoppingListWithItems(int id);
+
+    @Transaction
+    @Query("SELECT * FROM shopping_list WHERE backup_states = 1")
+    LiveData<List<ShoppingListWithItems>> getArchivingShoppingListWithItems();
 
     @Query("SELECT MAX(id) FROM shopping_list")
     int getLastId();

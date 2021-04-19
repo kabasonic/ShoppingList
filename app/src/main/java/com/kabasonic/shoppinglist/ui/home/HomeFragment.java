@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.kabasonic.shoppinglist.data.db.ShoppingListWithItems;
 import com.kabasonic.shoppinglist.ui.dialogs.TitleShoppingListDialog;
 import com.kabasonic.shoppinglist.util.Constants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
@@ -75,6 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mAdapter.setOnItemClickListener(new ShoppingListAdapter.OnItemClickListener() {
             @Override
             public void onClickItemView(int position, int id) {
+                Constants.TYPE_FRAGMENT_ADAPTER = Constants.CREATING_LIST;
                 Bundle bundle = new Bundle();
                 bundle.putInt("id_shopping_list",id);
                 Navigation.findNavController(view).navigate(R.id.fragmentShoppingListDetails,bundle);
@@ -82,9 +85,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
 
     }
-
-
-
 
     private void callDialog(){
         TitleShoppingListDialog titleShoppingListDialog = new TitleShoppingListDialog();
@@ -97,9 +97,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_TITLE:
-                    String title = data.getStringExtra(Constants.TAG_CHANGE_TITLE);
+                    String title = data.getStringExtra("title_home_shopping");
                     Bundle bundle = new Bundle();
-                    bundle.putString("title",title);
+                    bundle.putString("title_from_home_to_shopping",title);
                     Navigation.findNavController(view).navigate(R.id.fragmentShoppingListDetails,bundle);
                     break;
             }

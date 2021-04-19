@@ -26,16 +26,25 @@ public class ArchivingDialogs extends DialogFragment {
 
     public ArchivingDialogs() {}
 
-    public static ArchivingDialogs newInstance() {
+    public static ArchivingDialogs newInstance(boolean statusArchiving) {
+        ArchivingDialogs archivingDialogs = new ArchivingDialogs();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("checkbox",statusArchiving);
+        archivingDialogs.setArguments(bundle);
         return new ArchivingDialogs();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        boolean statusArchiving = false;
+        if(getArguments()!=null){
+            statusArchiving = getArguments().getBoolean("checkbox");
+        }
         LayoutInflater layoutInflater = getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.checkbox,null,false);
         CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+        checkBox.setChecked(statusArchiving);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         alertDialogBuilder.setTitle(getResources().getString(R.string.archiving));
         alertDialogBuilder.setView(view);
